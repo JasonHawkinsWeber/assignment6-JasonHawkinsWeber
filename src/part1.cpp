@@ -204,7 +204,7 @@ std::vector<Node> getBezierPoint(const std::vector<Node> &path, float scaler)
 {
   std::vector<Node> smoothPath = path;
 
-  //apply de Casteljau's algorithm
+  // apply de Casteljau's algorithm
   int i = smoothPath.size() - 1;
   while (i > 0)
   {
@@ -212,9 +212,9 @@ std::vector<Node> getBezierPoint(const std::vector<Node> &path, float scaler)
       smoothPath[k] = smoothPath[k] + scaler * (smoothPath[k + 1] - smoothPath[k]);
     i--;
   }
-  
-  //if the first point is not the same as the start point, add it
-  if(smoothPath[0].getXCoord() != path[0].getXCoord() && smoothPath[0].getYCoord() != path[0].getYCoord())
+
+  // if the first point is not the same as the start point, add it
+  if (smoothPath[0].getXCoord() != path[0].getXCoord() && smoothPath[0].getYCoord() != path[0].getYCoord())
   {
     smoothPath.insert(smoothPath.begin(), path[0]);
   }
@@ -223,7 +223,7 @@ std::vector<Node> getBezierPoint(const std::vector<Node> &path, float scaler)
 }
 
 // Function to check line of sight between two nodes
-// uses Bresenham's Line Algorithm 
+// uses Bresenham's Line Algorithm
 bool lineOfSight(Node node1, Node node2, const std::vector<std::vector<int>> &graph)
 {
   int x0 = node1.getXIndex();
@@ -371,7 +371,7 @@ std::vector<Node> thetaStarPathing(const std::vector<std::vector<int>> &graph, c
         else
         {
 
-          //If there is no line-of-sight, proceed as normal A*
+          // If there is no line-of-sight, proceed as normal A*
           // Tentative g cost (current cost + 1 for movement)
           int newG = gScore[current.getXIndex()][current.getYIndex()] + 1;
           if (newG < gScore[newX][newY])
@@ -439,11 +439,11 @@ void PrintPath(const std::vector<std::vector<int>> &grid, const std::vector<Node
 double totalDistance(const std::vector<Node> &path)
 {
   double totalDistance = 0.;
-  for(int i=0; i<path.size()-1; i++)
+  for (int i = 0; i < path.size() - 1; i++)
   {
-    totalDistance += sqrt(pow(path[i].getXCoord() - path[i + 1].getXCoord(), 2) + pow(path[i].getYCoord() - path[i+ 1].getYCoord(), 2));
+    totalDistance += sqrt(pow(path[i].getXCoord() - path[i + 1].getXCoord(), 2) + pow(path[i].getYCoord() - path[i + 1].getYCoord(), 2));
   }
-  return totalDistance; 
+  return totalDistance;
 }
 
 // Main function
@@ -464,7 +464,6 @@ int main(int argc, char *argv[])
   //                                       {0, 0, 0, 0, 1, 0, 1, 0}};
   // Node goal(7, 7);
 
-
   // Create the matrix from the file
   std::string fileName = std::string(argv[1]);
   int n = std::stoi(argv[2]);
@@ -484,14 +483,12 @@ int main(int argc, char *argv[])
   {
     std::cout << "No path found.\n";
   }
-  
+
   std::vector<Node> smoothPath;
 
   bool pathValid = false;
   float scale = 0.05f;
   smoothPath = getBezierPoint(path, scale);
-
-    
 
   if (!smoothPath.empty())
   {
@@ -511,7 +508,7 @@ int main(int argc, char *argv[])
     std::cout << "Path found:\n";
     std::cout << "Total Distance: " << totalDistance(thetaPath) << std::endl;
     PrintPath(grid, thetaPath);
-}
+  }
   else
   {
     std::cout << "No path found.\n";
