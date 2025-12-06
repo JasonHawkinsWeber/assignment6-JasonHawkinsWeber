@@ -448,6 +448,7 @@ double totalDistance(const std::vector<Node> &path)
 
 // Main function
 // Takes in command line arguments for file name and grid size
+// For example: ./prog1 ../resources/grid64x64 64
 int main(int argc, char *argv[])
 {
 
