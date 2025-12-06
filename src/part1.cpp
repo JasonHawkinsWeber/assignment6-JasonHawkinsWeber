@@ -280,6 +280,7 @@ bool lineOfSight(Node node1, Node node2, const std::vector<std::vector<int>> &gr
   return false;
 }
 
+// Theta* Pathfinding Algorithm
 std::vector<Node> thetaStarPathing(const std::vector<std::vector<int>> &graph, const Node &start, const Node &goal)
 {
   int rows_cols = graph.size();
@@ -299,10 +300,6 @@ std::vector<Node> thetaStarPathing(const std::vector<std::vector<int>> &graph, c
   // Initialize start node cost
   gScore[start.getXIndex()][start.getYIndex()] = 0;
   openList.push(start);
-
-  // gScore(node) is the current shortest distance from the start node to node
-  // heuristic(node) is the estimated distance of node from the goal node
-  // there are many options for the heuristic such as Euclidean or Manhattan
 
   while (!openList.empty())
   {
@@ -401,7 +398,7 @@ std::vector<Node> thetaStarPathing(const std::vector<std::vector<int>> &graph, c
   return {};
 }
 
-// Prints the path on the grid with 'X' for path and '-' for empty space
+// Prints the path on the grid with 'X' for path and '-' for empty space and '|' for blocked nodes
 void PrintPath(const std::vector<std::vector<int>> &grid, const std::vector<Node> &path)
 {
 
@@ -449,31 +446,32 @@ double totalDistance(const std::vector<Node> &path)
   return totalDistance; 
 }
 
-
+// Main function
+// Takes in command line arguments for file name and grid size
 int main(int argc, char *argv[])
 {
 
   // 1--> Node is blocked
   // 0--> Node isn't blocked
   // Grid must be square
-  std::vector<std::vector<int>> grid = {{0, 0, 0, 0, 1, 0, 0, 0},
-                                        {0, 0, 0, 0, 1, 0, 1, 0},
-                                        {0, 0, 0, 0, 1, 0, 1, 0},
-                                        {0, 0, 0, 0, 0, 0, 1, 0},
-                                        {0, 0, 0, 0, 1, 0, 1, 0},
-                                        {0, 0, 0, 0, 1, 0, 1, 0},
-                                        {0, 0, 0, 0, 1, 0, 1, 0},
-                                        {0, 0, 0, 0, 1, 0, 1, 0}};
-  Node goal(7, 7);
+  // std::vector<std::vector<int>> grid = {{0, 0, 0, 0, 1, 0, 0, 0},
+  //                                       {0, 0, 0, 0, 1, 0, 1, 0},
+  //                                       {0, 0, 0, 0, 1, 0, 1, 0},
+  //                                       {0, 0, 0, 0, 0, 0, 1, 0},
+  //                                       {0, 0, 0, 0, 1, 0, 1, 0},
+  //                                       {0, 0, 0, 0, 1, 0, 1, 0},
+  //                                       {0, 0, 0, 0, 1, 0, 1, 0},
+  //                                       {0, 0, 0, 0, 1, 0, 1, 0}};
+  // Node goal(7, 7);
 
 
   // Create the matrix from the file
   std::string fileName = std::string(argv[1]);
   int n = std::stoi(argv[2]);
- // std::vector<std::vector<int>> grid = createGridFromFile(fileName, n);
+  std::vector<std::vector<int>> grid = createGridFromFile(fileName, n);
 
   Node start(0, 0);
-  // Node goal(63, 63);
+  Node goal(63, 63);
 
   auto path = aStarPathing(grid, start, goal);
   if (!path.empty())
